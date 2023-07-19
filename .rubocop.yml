@@ -351,6 +351,7 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.2.2
   Exclude:
+    - "db/**/*"
     - "bin/**/*"
     - "bin/**.*"
     - "config/**.*"
