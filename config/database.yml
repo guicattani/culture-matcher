@@ -8,13 +8,13 @@ default: &default
 
 development:
   <<: *default
-  database: cm_development
+  database: cultural_match_development
 test:
   <<: *default
-  database: cm_test
+  database: cultural_match_test
 
 production:
   <<: *default
-  database: cm_production
-  username: cm
-  password: <%= ENV["CM_DATABASE_PASSWORD"] %>
+  database: cultural_match_production
+  username: cultural_match
+  password: <%= ENV["CULTURE_MATCH_DATABASE_PASSWORD"] %>
