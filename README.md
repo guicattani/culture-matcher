@@ -1,3 +1,13 @@
+# Considerations
+
+- Tests should be runned with `bundle exec rspec`, otherwise you might see the following warning `WARN: Unresolved or ambiguous specs during Gem::Specification.reset` and this is due to `racc` version being used by base Ruby differing from Nokogiri's.
+
+
+# To be improved
+
+- Use uuid for databases IDs so that the IDs don't are too obvious / leak
+- Improve 'undefined' logic for culture type... Maybe remove it and treat it only in FE?
+- Company Matcher is meant to be an aggregator (to reduce API calls), but at the moment the benefits are marginal. We could switch to APIs, but this means we wouldn't get anything from the Vite + Rails combination
 
 # Checklist
 ## Use Cases
@@ -16,11 +26,11 @@
 # Requirements
 ## Backend
 
-- [ ] Ruby on Rails.
-- [ ] Timestamps, when presented, should be presented in in ISO8601 format.
-- [ ] API architecture: REST.
+- [x] Ruby on Rails.
+- [x] Timestamps, when presented, should be presented in in ISO8601 format.
+- [x] API architecture: REST.
 - [ ] API documentation: OpenAPI.
-- [ ] Database: PostgreSQL.
+- [x] Database: PostgreSQL.
 - [ ] Tested
 - [ ] Documented
 - [ ] Linted
@@ -32,7 +42,7 @@
 
 ## Frontend
 
-- [ ] ReactJS
+- [x] ReactJS
 - [ ] JS or Typescript
 - [ ] Jest
 - [ ] Tested
@@ -40,5 +50,3 @@
 - [ ] Linted
 
 ---
-
-## 

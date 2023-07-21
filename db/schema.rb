@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_215701) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "unique_indexed_names", unique: true
   end
 
   create_table "matches", force: :cascade do |t|
