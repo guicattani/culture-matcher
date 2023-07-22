@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import RubyPlugin from 'vite-plugin-ruby'
 import ViteReact from '@vitejs/plugin-react'
 import WindiCSS from 'vite-plugin-windicss'
+import FullReload from "vite-plugin-full-reload";
 
 export default defineConfig({
   plugins: [
@@ -14,5 +15,6 @@ export default defineConfig({
         dirs: ['app/views', 'app/frontend'], // or app/javascript
       },
     }),
+    FullReload(["app/views/**/*.erb"]),
   ],
 })

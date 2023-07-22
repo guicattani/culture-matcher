@@ -1,10 +1,4 @@
 <header>
-  <a href="https://vite-ruby.netlify.app/guide/rails.html">
-    <img class="logo smooth" src="<%= vite_asset_path 'images/logo.svg' %>"/>
-    <div id="lista"><%= @applicants.map(&:first_name) %></div>
-    <div id="listb"><%= @companies.map(&:name) %></div>
-    <div id="listc"><%= @culture_types.map(&:name) %></div>
-    <div id="listd"><%= @matches.map{|m| m.applicant + " " + m.company} %></div>
-    <div id="hero"></div>
-  </a>
+  <img class="logo smooth" src="<%= vite_asset_path 'images/logo.svg' %>"/>
+  <div id="root"></div>
 </header>
