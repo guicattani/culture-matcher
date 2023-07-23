@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_215701) do
   create_table "applicants", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
-    t.bigint "culture_type_id", null: false
+    t.bigint "culture_type_id", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["culture_type_id"], name: "index_applicants_on_culture_type_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_215701) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name", null: false
-    t.bigint "culture_type_id", null: false
+    t.bigint "culture_type_id", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["culture_type_id"], name: "index_companies_on_culture_type_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_19_215701) do
     t.bigint "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["applicant_id", "company_id"], name: "index_matches_on_applicant_id_and_company_id", unique: true
     t.index ["applicant_id"], name: "index_matches_on_applicant_id"
     t.index ["company_id"], name: "index_matches_on_company_id"
   end

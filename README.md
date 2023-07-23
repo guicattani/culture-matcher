@@ -6,8 +6,12 @@
 # To be improved
 
 - Use uuid for databases IDs so that the IDs don't are too obvious / leak
-- Improve 'undefined' logic for culture type... Maybe remove it and treat it only in FE?
-- Company Matcher is meant to be an aggregator (to reduce API calls), but at the moment the benefits are marginal. We could switch to APIs, but this means we wouldn't get anything from the Vite + Rails combination
+- Improve 'undefined' logic for culture type as it is pretty barebones... Maybe remove it and treat it only in FE?
+- Dark Reader (Firefox) make the CSS look funny even when disabled
+- CSFR tokens are disabled
+- HTML is very simple on purpose, everything is put under a header
+- `MaterialReactTable` has built-in filters but they are only front-end (we need all the data at runtime) so it would be better to offload some of that to the back-end as well
+- Performance in the `match` function `app/controllers/api/v1/matches_controller.rb` could be improved through batches, we don't need to do it all at once
 
 # Checklist
 ## Use Cases

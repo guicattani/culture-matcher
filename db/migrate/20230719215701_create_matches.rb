@@ -8,5 +8,7 @@ class CreateMatches < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :matches, [:applicant_id, :company_id], unique: true
   end
 end

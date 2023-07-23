@@ -1,8 +1,14 @@
 Rails.application.routes.draw do
   root to: 'company_matcher#index', as: :company_matcher
 
-  match 'applicants/'    => "applicants#create",    :via => :post
-  match 'companies/'     => "companies#create",     :via => :post
-  match 'culture_types/' => "culture_types#create", :via => :post
-  match 'matches/'       => "matches#create",       :via => :post
+  namespace :api do
+    namespace :v1 do
+      resources :applicants, only: [:index, :create]
+      resources :culture_types, only: [:index, :create]
+      resources :companies, only: [:index, :create]
+      resources :matches, only: [:index, :create]
+      match 'matches/match'       => "matches#match",       :via => :post
+    end
+  end
+
 end

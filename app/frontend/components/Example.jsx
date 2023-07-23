@@ -1,12 +1,41 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useForm } from "react-hook-form";
 import Modal from "react-modal";
 
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { MaterialReactTable } from "material-react-table";
 
+import { AddBox, Save, Close } from "@mui/icons-material/";
+import { IconButton, Tooltip } from "@mui/material";
+
+Modal.setAppElement("#root");
+
 export default function Example() {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalDataValid, setModalDataValid] = useState(false);
+  const [tableLoading, setTableLoading] = useState(true);
+  const [applicants, setApplicants] = useState(false);
+  const [cultureTypes, setCultureTypes] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/v1/applicants")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setApplicants(data);
+        setTableLoading(false);
+      });
+
+    fetch("/api/v1/culture_types")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setCultureTypes(data);
+      });
+  }, []);
 
   const customStyles = {
     content: {
@@ -19,157 +48,199 @@ export default function Example() {
     },
   };
 
-  let subtitle;
-
-  const openModal = () => {
-    setIsOpen(true);
+  const onModalChange = () => {
+    setModalIsOpen(true);
   };
 
-  const afterOpenModal = () => {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
+  const openModal = () => {
+    setModalIsOpen(true);
   };
 
   const closeModal = () => {
-    setIsOpen(false);
+    setModalIsOpen(false);
   };
 
-  //nested data is ok, see accessorKeys in ColumnDef below
-  const data = [
-    {
-      name: {
-        firstName: "John",
-        lastName: "Doe",
-      },
-      address: "261 Erdman Ford",
-      city: "East Daphne",
-      state: "Kentucky",
-    },
-    {
-      name: {
-        firstName: "Jane",
-        lastName: "Doe",
-      },
-      address: "769 Dominic Grove",
-      city: "Columbus",
-      state: "Ohio",
-    },
-    {
-      name: {
-        firstName: "Joe",
-        lastName: "Doe",
-      },
-      address: "566 Brakus Inlet",
-      city: "South Linda",
-      state: "West Virginia",
-    },
-    {
-      name: {
-        firstName: "Kevin",
-        lastName: "Vandy",
-      },
-      address: "722 Emie Stream",
-      city: "Lincoln",
-      state: "Nebraska",
-    },
-    {
-      name: {
-        firstName: "Joshua",
-        lastName: "Rolluffs",
-      },
-      address: "32188 Larkin Turnpike",
-      city: "Charleston",
-      state: "South Carolina",
-    },
-  ];
+  const onSubmit = (e) => {
+    createApplicant({
+      first_name: e.firstName,
+      last_name: e.lastName,
+      culture_type_id: e.cultureTypeId,
+    });
+    closeModal();
+  };
+
+  const createApplicant = (attributes) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(attributes),
+    };
+    console.log(attributes);
+    console.log(JSON.stringify(attributes));
+    fetch("/api/v1/applicants", requestOptions)
+      .then((response) => response.json())
+      .then((data) => setApplicants([...applicants, data]));
+  };
 
   //should be memoized or stable
   const columns = useMemo(
     () => [
       {
-        accessorKey: "name.firstName", //access nested data with dot notation
+        accessorKey: "id",
+        header: "ID",
+        size: 150,
+      },
+      {
+        accessorKey: "first_name",
         header: "First Name",
         size: 150,
       },
       {
-        accessorKey: "name.lastName",
+        accessorKey: "last_name",
         header: "Last Name",
         size: 150,
       },
       {
-        accessorKey: "address", //normal accessorKey
-        header: "Addressa",
-        size: 200,
-      },
-      {
-        accessorKey: "city",
-        header: "City",
-        size: 150,
-      },
-      {
-        accessorKey: "state",
-        header: "State",
+        accessorKey: "culture_type.name",
+        header: "Culture type",
         size: 150,
       },
     ],
     []
   );
 
+  let formFields = {};
+  const cultureTypeRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
-    <Tabs>
+    <div>
       <div>
         <Modal
           isOpen={modalIsOpen}
-          onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
+          contentLabel="Add applicant"
         >
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-          <button onClick={closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
+          <div className="flex pb-4">
+            <h2 className="flex-1">Add Applicant</h2>
+            <button onClick={closeModal}>
+              <Close />
+            </button>
+          </div>
+
+          <form className="w-full max-w-sm" onSubmit={handleSubmit(onSubmit)}>
+            <div className="md:flex md:items-center mb-6">
+              <div className="md:w-1/3">
+                <label>First Name</label>
+              </div>
+              <div className="md:w-2/3">
+                <input
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                  ref={(input) => (formFields.firstName = input)}
+                  id="firstName"
+                  type="text"
+                  placeholder="Jane"
+                  required
+                  {...register("firstName", { required: true })}
+                />
+              </div>
+            </div>
+            <div className="md:flex md:items-center mb-6">
+              <div className="md:w-1/3">
+                <label>Last Name</label>
+              </div>
+              <div className="md:w-2/3">
+                <input
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                  id="lastName"
+                  ref={(input) => (formFields.lastName = input)}
+                  placeholder="Doe"
+                  required
+                  {...register("lastName", { required: true })}
+                />
+              </div>
+            </div>
+            <div className="md:flex md:items-center mb-6">
+              <div className="md:w-1/3">
+                <label>Culture Type</label>
+              </div>
+              <div className="md:w-2/3">
+                <div className="inline-block relative w-49">
+                  <select
+                    className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                    ref={cultureTypeRef}
+                    required
+                    defaultValue=""
+                    {...register("cultureTypeId", { required: true })}
+                  >
+                    <option value="" disabled hidden />
+                    {cultureTypes &&
+                      cultureTypes.map((e) => (
+                        <option value={e.id} key={e.id}>{`${e.name}`}</option>
+                      ))}
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg
+                      className="fill-current h-4 w-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="md:flex md:items-center">
+              <div className="md:w-1/3"></div>
+              <div className="md:w-2/3 flex">
+                <button
+                  className="shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
+                  type="submit"
+                >
+                  <div className="flex">
+                    <Save />
+                    <p>Save</p>
+                  </div>
+                </button>
+              </div>
+            </div>
           </form>
         </Modal>
       </div>
 
-      <TabList>
-        <Tab>Title 1</Tab>
-        <Tab>Title 2</Tab>
-      </TabList>
+      <Tabs>
+        <TabList>
+          <Tab>Applicants</Tab>
+        </TabList>
 
-      <TabPanel>
-        <MaterialReactTable
-          columns={columns}
-          data={data}
-          state={{ isLoading: true }}
-          renderTopToolbarCustomActions={() => {
-            return (
-              <div>
-                {/* <Tooltip arrow title="Create New User">
-                  <IconButton onClick={openModal}>
-                    <AddBoxIcon />
-                  </IconButton>
-                </Tooltip> */}
-              </div>
-            );
-          }}
-        />
-      </TabPanel>
-      <TabPanel>
-        <h2>
+        <TabPanel>
           <MaterialReactTable
             columns={columns}
-            data={{}}
-            state={{ isLoading: true }}
+            data={applicants}
+            enableTopToolbar={!modalIsOpen}
+            enableBottomToolbar={!modalIsOpen}
+            state={{ isLoading: tableLoading }}
+            renderTopToolbarCustomActions={() => {
+              return (
+                <div>
+                  <Tooltip arrow title="Create New User">
+                    <IconButton onClick={openModal}>
+                      <AddBox />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              );
+            }}
           />
-        </h2>
-      </TabPanel>
-    </Tabs>
+        </TabPanel>
+      </Tabs>
+    </div>
   );
 }

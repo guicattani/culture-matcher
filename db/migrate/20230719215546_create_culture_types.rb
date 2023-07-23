@@ -13,6 +13,9 @@ class CreateCultureTypes < ActiveRecord::Migration[7.0]
       direction.up do
         execute <<-SQL
          INSERT INTO culture_types VALUES (1, 'undefined', NOW(), NOW());
+         SELECT setval('culture_types_id_seq',
+                       COALESCE((SELECT MAX(id)+1 FROM culture_types), 1),
+                       false);
         SQL
       end
     end
