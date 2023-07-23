@@ -5,17 +5,9 @@ module Api::V1
     skip_before_action :verify_authenticity_token
 
     def index
-      render json: Match.all.to_json, status: :ok
-    end
-
-    def create
-      @match = Match.new(match_params)
-
-      if @match.save
-        render json: @match.to_json, status: :created
-      else
-        render json: { errors: @match.errors }, status: :unprocessable_entity
-      end
+      render json: Match.all.to_json(include: { company: { only: :name },
+                                                applicant: { only: %i[first_name
+                                                                      last_name] } }), status: :ok
     end
 
     def match
@@ -29,23 +21,27 @@ module Api::V1
       ")
 
       errors = []
+      matches = []
       new_matches.each do |new_match|
         match = Match.new(applicant_id: new_match['applicant_id'],
                           company_id: new_match['company_id'])
-        next if match.save
+        if match.save
+          matches << match if match.save
+          next
+        end
 
         errors << "error matching: applicant_id #{new_match['applicant_id']} " \
                   "company_id #{new_match['company_id']}: " \
                   "#{match.errors.message}"
       end
 
-      render json: errors.to_json, status: :created
-    end
+      pp "errors in matches: #{errors}" # put logger here as soon as logic is done
 
-    private
-
-    def match_params
-      params.permit(:applicant_id, :company_id)
+      render json: matches.to_json(
+        include: { company: { only: :name },
+                   applicant: { only: %i[first_name
+                                         last_name] } }
+      ), status: :created
     end
   end
 end

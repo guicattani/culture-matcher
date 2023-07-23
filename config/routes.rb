@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :applicants, only: [:index, :create]
       resources :culture_types, only: [:index, :create]
       resources :companies, only: [:index, :create]
-      resources :matches, only: [:index, :create]
+      resources :matches, only: [:index]
       match 'matches/match'       => "matches#match",       :via => :post
     end
   end

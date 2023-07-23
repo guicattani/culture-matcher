@@ -1,11 +1,11 @@
 import Hero from "../components/Hero";
-import Example from "../components/Example";
+import CultureMatcherTabs from "../components/CultureMatcherTabs";
 
 export default function CultureMatcher() {
   return (
     <main>
       <Hero />
-      <Example />
+      <CultureMatcherTabs />
     </main>
   );
 }

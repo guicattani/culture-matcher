@@ -5,14 +5,17 @@ module Api::V1
     skip_before_action :verify_authenticity_token
 
     def index
-      render json: Company.all.to_json, status: :ok
+      render json: Company.all
+                          .includes(:culture_type)
+                          .to_json(include: { culture_type: { only: :name } }),
+             status: :ok
     end
 
     def create
       @company = Company.new(company_params)
 
       if @company.save
-        render json: @company.to_json, status: :created
+        render json: @company.to_json(include: { culture_type: { only: :name } }), status: :created
       else
         render json: { errors: @company.errors }, status: :unprocessable_entity
       end

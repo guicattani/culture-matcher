@@ -1,9 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import Modal from "react-modal";
 
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
+import Modal from "react-modal";
 import { MaterialReactTable } from "material-react-table";
 
 import { AddBox, Save, Close } from "@mui/icons-material/";
@@ -11,9 +9,8 @@ import { IconButton, Tooltip } from "@mui/material";
 
 Modal.setAppElement("#root");
 
-export default function Example() {
+export default function ApplicantsTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [modalDataValid, setModalDataValid] = useState(false);
   const [tableLoading, setTableLoading] = useState(true);
   const [applicants, setApplicants] = useState(false);
   const [cultureTypes, setCultureTypes] = useState(false);
@@ -48,10 +45,6 @@ export default function Example() {
     },
   };
 
-  const onModalChange = () => {
-    setModalIsOpen(true);
-  };
-
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -75,8 +68,6 @@ export default function Example() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(attributes),
     };
-    console.log(attributes);
-    console.log(JSON.stringify(attributes));
     fetch("/api/v1/applicants", requestOptions)
       .then((response) => response.json())
       .then((data) => setApplicants([...applicants, data]));
@@ -214,33 +205,29 @@ export default function Example() {
           </form>
         </Modal>
       </div>
-
-      <Tabs>
-        <TabList>
-          <Tab>Applicants</Tab>
-        </TabList>
-
-        <TabPanel>
-          <MaterialReactTable
-            columns={columns}
-            data={applicants}
-            enableTopToolbar={!modalIsOpen}
-            enableBottomToolbar={!modalIsOpen}
-            state={{ isLoading: tableLoading }}
-            renderTopToolbarCustomActions={() => {
-              return (
-                <div>
-                  <Tooltip arrow title="Create New User">
-                    <IconButton onClick={openModal}>
-                      <AddBox />
-                    </IconButton>
-                  </Tooltip>
-                </div>
-              );
-            }}
-          />
-        </TabPanel>
-      </Tabs>
+      <MaterialReactTable
+        columns={columns}
+        data={applicants}
+        enableTopToolbar={!modalIsOpen}
+        enableBottomToolbar={!modalIsOpen}
+        state={{ isLoading: tableLoading }}
+        muiTableContainerProps={{
+          sx: {
+            minWidth: "1000px",
+          },
+        }}
+        renderTopToolbarCustomActions={() => {
+          return (
+            <div>
+              <Tooltip arrow title="Create New Applicant">
+                <IconButton onClick={openModal}>
+                  <AddBox />
+                </IconButton>
+              </Tooltip>
+            </div>
+          );
+        }}
+      />
     </div>
   );
 }
