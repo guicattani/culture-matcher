@@ -78,7 +78,7 @@ export default function MatchesTable() {
         renderTopToolbarCustomActions={() => {
           return (
             <div>
-              <Tooltip arrow title="Match Applicants and Companies">
+              <Tooltip arrow title="Start Match">
                 <IconButton onClick={createMatches}>
                   <Favorite />
                 </IconButton>
