@@ -38,7 +38,7 @@ export default function MatchesTable() {
       {
         accessorKey: "applicant_id",
         header: "Applicant ID",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "applicant.first_name",
@@ -53,12 +53,12 @@ export default function MatchesTable() {
       {
         accessorKey: "company_id",
         header: "Company ID",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "company.name",
         header: "Company Name",
-        size: 150,
+        size: 120,
       },
     ],
     []
@@ -67,6 +67,7 @@ export default function MatchesTable() {
   return (
     <div>
       <MaterialReactTable
+        layoutMode="grid"
         columns={columns}
         data={matches}
         state={{ isLoading: tableLoading }}

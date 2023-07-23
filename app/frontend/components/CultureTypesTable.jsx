@@ -68,7 +68,7 @@ export default function CultureTypesTable() {
       {
         accessorKey: "id",
         header: "ID",
-        size: 150,
+        size: 20,
       },
       {
         accessorKey: "name",
@@ -139,6 +139,7 @@ export default function CultureTypesTable() {
         </Modal>
       </div>
       <MaterialReactTable
+        layoutMode="grid"
         columns={columns}
         data={cultureTypes}
         enableTopToolbar={!modalIsOpen}

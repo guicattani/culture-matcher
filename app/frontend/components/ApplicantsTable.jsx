@@ -79,22 +79,22 @@ export default function ApplicantsTable() {
       {
         accessorKey: "id",
         header: "ID",
-        size: 150,
+        size: 20,
       },
       {
         accessorKey: "first_name",
         header: "First Name",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "last_name",
         header: "Last Name",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "culture_type.name",
-        header: "Culture type",
-        size: 150,
+        header: "Culture Type",
+        size: 100,
       },
     ],
     []
@@ -206,6 +206,7 @@ export default function ApplicantsTable() {
         </Modal>
       </div>
       <MaterialReactTable
+        layoutMode="grid"
         columns={columns}
         data={applicants}
         enableTopToolbar={!modalIsOpen}

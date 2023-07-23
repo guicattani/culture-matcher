@@ -78,17 +78,17 @@ export default function CompaniesTable() {
       {
         accessorKey: "id",
         header: "ID",
-        size: 150,
+        size: 20,
       },
       {
         accessorKey: "name",
         header: "Name",
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: "culture_type.name",
-        header: "Culture type",
-        size: 150,
+        header: "Culture Type",
+        size: 100,
       },
     ],
     []
@@ -185,6 +185,7 @@ export default function CompaniesTable() {
         </Modal>
       </div>
       <MaterialReactTable
+        layoutMode="grid"
         columns={columns}
         data={companies}
         enableTopToolbar={!modalIsOpen}
