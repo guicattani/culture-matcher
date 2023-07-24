@@ -39,7 +39,7 @@ npm run test
 
 # How to use
 
-It should be mostly self explanatory, but access the server with `localhost:3000`. You should see the Culture Matcher hero and an empty table, that you can fill using the Modal that opens with clicking the `+` sign in the top left corner. Same goes for other Tabs (Company and Culture Type). The last tab is the Matches tab, where you can match the Company and the Applicants.
+It should be mostly self explanatory, but access the server with `localhost:3000`. You should see the Culture Matcher hero and an empty table, that you can fill using the Modal that opens with clicking the `+` sign in the top left corner. Same goes for other Tabs (Company and Culture Type). The last tab is the Matches tab, where you can match the Company and the Applicants. At the moment there is no way of deleting Applicants, Companies, Culture Types and Matches in the UI. The tester is invited to remove it using `bundle exec rails c` and deleting directly in the model e.g.: `Applicant.last.destroy`
 
 ---
 

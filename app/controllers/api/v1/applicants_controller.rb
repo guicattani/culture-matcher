@@ -4,6 +4,7 @@ module Api::V1
   class ApplicantsController < ActionController::Base
     skip_before_action :verify_authenticity_token
 
+    # GET /api/v1/applicants
     def index
       render json: Applicant.all
                             .includes(:culture_type)
@@ -11,6 +12,7 @@ module Api::V1
              status: :ok
     end
 
+    # POST /api/v1/applicants
     def create
       @applicant = Applicant.new(applicant_params)
 

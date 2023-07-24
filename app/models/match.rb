@@ -1,9 +1,20 @@
 # frozen_string_literal: true
 
+##
+# Match represents the model for a match
 class Match < ApplicationRecord
   belongs_to :applicant
   belongs_to :company
 
+  ##
+  # Create matches based on whatever culture types
+  # applicants and companies have in common
+  #
+  # Will ignore the culture_type.id = 1 because it is
+  # set as 'undefined'
+  #
+  # Will ignore already matched matches to improve
+  # performance
   def self.match
     new_matches = ActiveRecord::Base.connection.execute("
       SELECT applicants.id AS applicant_id, companies.id AS company_id

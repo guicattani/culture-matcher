@@ -4,10 +4,12 @@ module Api::V1
   class CultureTypesController < ActionController::Base
     skip_before_action :verify_authenticity_token
 
+    # GET /api/v1/culture_types
     def index
       render json: CultureType.all.to_json, status: :ok
     end
 
+    # POST /api/v1/culture_types
     def create
       @culture_type = CultureType.new(culture_type_params)
 

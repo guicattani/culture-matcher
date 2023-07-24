@@ -4,6 +4,7 @@ module Api::V1
   class CompaniesController < ActionController::Base
     skip_before_action :verify_authenticity_token
 
+    # GET /api/v1/company
     def index
       render json: Company.all
                           .includes(:culture_type)
@@ -11,6 +12,7 @@ module Api::V1
              status: :ok
     end
 
+    # POST /api/v1/company
     def create
       @company = Company.new(company_params)
 
