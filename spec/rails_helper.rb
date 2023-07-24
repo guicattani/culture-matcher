@@ -4,7 +4,7 @@ require 'spec_helper'
 require 'shoulda/matchers'
 require 'factory_bot_rails'
 require 'database_cleaner'
-require 'ffaker'
+require 'faker'
 require 'simplecov'
 require_relative '../config/environment'
 abort("The Rails environment is running in production mode!") if Rails.env.production?
@@ -19,9 +19,7 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.before(:suite) do
-    FactoryBot.find_definitions
-  end
+  config.include FactoryBot::Syntax::Methods
 
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
