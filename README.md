@@ -1,7 +1,53 @@
+CM is a monolithic React / Ruby application. It uses Vite for faster development of the Frontend.
+
+# Installation
+
+## Pre-requisites
+* Node v16
+* Ruby 3.2.2
+
+## Setup dependencies
+
+```
+npm install
+bundle install
+rails db:prepare
+```
+
+## Start the server
+
+Start Vite dev server with:
+```
+./bin/vite dev
+```
+And Rails with:
+```
+bundle exec rails s
+```
+
+## Run tests
+### BE
+```
+bundle rails db:prepare
+bundle exec rspec
+```
+
+### FE 
+```
+npm run test
+```
+
+# How to use
+
+It should be mostly self explanatory, but access the server with `localhost:3000`. You should see the Culture Matcher hero and an empty table, that you can fill using the Modal that opens with clicking the `+` sign in the top left corner. Same goes for other Tabs (Company and Culture Type). The last tab is the Matches tab, where you can match the Company and the Applicants.
+
+---
+
+
 # Considerations
 
 - Tests should be run with `bundle exec rspec`, otherwise you might see the following warning `WARN: Unresolved or ambiguous specs during Gem::Specification.reset` and this is due to `racc` version being used by base Ruby differing from Nokogiri's.
-
+- The `undefined` part for the culture type was pretty confusing because I didn't know whether it should be in the BE and the FE or simply in the FE. So I added a not so good in the BE as well. I tried using the model and the Database to enforce that the default culture type is ID 1 ( undefined ).
 
 # To be improved
 
