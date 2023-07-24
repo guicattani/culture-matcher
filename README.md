@@ -1,6 +1,6 @@
 # Considerations
 
-- Tests should be runned with `bundle exec rspec`, otherwise you might see the following warning `WARN: Unresolved or ambiguous specs during Gem::Specification.reset` and this is due to `racc` version being used by base Ruby differing from Nokogiri's.
+- Tests should be run with `bundle exec rspec`, otherwise you might see the following warning `WARN: Unresolved or ambiguous specs during Gem::Specification.reset` and this is due to `racc` version being used by base Ruby differing from Nokogiri's.
 
 
 # To be improved
@@ -13,6 +13,9 @@
 - HTML is very simple on purpose, everything is put under a header
 - `MaterialReactTable` has built-in filters but they are only front-end (we need all the data at runtime) so it would be better to offload some of that to the back-end as well
 - Performance in the `match` function `app/controllers/api/v1/matches_controller.rb` could be improved through batches, we don't need to do it all at once
+- Jest tests have a good base but need to be improved because they don't test a lot
+- Create controller/request tests for the company matcher handler - since it renders it would take more time
+- `spec/requests/matches_spec.rb` has the same test as `app/models/match.rb` and this is not ideal, I could do it with dependency inversion and spies but it wouldn't look as neat, so this needs to be improved as a whole
 
 # Checklist
 ## Use Cases
@@ -34,7 +37,7 @@
 - [x] Ruby on Rails.
 - [x] Timestamps, when presented, should be presented in in ISO8601 format.
 - [x] API architecture: REST.
-- [ ] API documentation: OpenAPI.
+- [x] API documentation: OpenAPI.
 - [x] Database: PostgreSQL.
 - [x] Tested
 - [ ] Documented
@@ -50,7 +53,7 @@
 - [x] ReactJS
 - [x] JS or Typescript
 - [x] Jest
-- [ ] Tested
+- [x] Tested
 - [ ] Documented
 - [x] Linted
 

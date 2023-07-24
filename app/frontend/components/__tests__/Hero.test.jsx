@@ -1,11 +1,11 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 
-import { listCategories } from "../../services/API";
+import Hero from "../Hero";
 
-describe("App", () => {
-  it("should work as expected", () => {
-    // render(<App />);
-    expect(1 + 1).toBe(2);
+describe("Hero", () => {
+  it("should show text Culture Matcher", () => {
+    render(<Hero />);
+    expect(screen.getByRole("heading")).toHaveTextContent(/Culture Matcher/);
   });
 });

@@ -7,7 +7,9 @@ import { MaterialReactTable } from "material-react-table";
 import { AddBox, Save, Close } from "@mui/icons-material/";
 import { IconButton, Tooltip } from "@mui/material";
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV != "test") {
+  Modal.setAppElement("#root");
+}
 
 export default function ApplicantsTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -172,7 +174,12 @@ export default function ApplicantsTable() {
                     <option value="" disabled hidden />
                     {cultureTypes &&
                       cultureTypes.map((e) => (
-                        <option value={e.id} key={e.id}>{`${e.name}`}</option>
+                        <option
+                          role="applicant"
+                          name="applicant{e.id}"
+                          value={e.id}
+                          key={e.id}
+                        >{`${e.name}`}</option>
                       ))}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">

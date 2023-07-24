@@ -7,7 +7,9 @@ import { MaterialReactTable } from "material-react-table";
 import { AddBox, Save, Close } from "@mui/icons-material/";
 import { IconButton, Tooltip } from "@mui/material";
 
-Modal.setAppElement("#root");
+if (process.env.NODE_ENV != "test") {
+  Modal.setAppElement("#root");
+}
 
 export default function CultureTypesTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
