@@ -1,3 +1,6 @@
+/**
+ * Hero holds the lettering for the Hero above the main Table
+ */
 export default function Hero() {
   return (
     <>

@@ -11,6 +11,13 @@ if (process.env.NODE_ENV != "test") {
   Modal.setAppElement("#root");
 }
 
+/**
+ * ApplicantsTable is the component holding both the Table and the Modal for the
+ * Applicants Tab
+ *
+ * It starts by fetching applicants from `/api/v1/applicants` and culture types
+ * from /api/v1/culture_types
+ */
 export default function ApplicantsTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tableLoading, setTableLoading] = useState(true);

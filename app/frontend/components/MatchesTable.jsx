@@ -5,6 +5,12 @@ import { MaterialReactTable } from "material-react-table";
 import { Favorite } from "@mui/icons-material/";
 import { IconButton, Tooltip } from "@mui/material";
 
+/**
+ * MatchesTable is the component the Table and the Start Match action
+ * for the Match model
+ *
+ * It starts by fetching matches from `/api/v1/matches`
+ */
 export default function MatchesTable() {
   const [tableLoading, setTableLoading] = useState(true);
   const [matches, setMatches] = useState(false);

@@ -11,6 +11,13 @@ if (process.env.NODE_ENV != "test") {
   Modal.setAppElement("#root");
 }
 
+/**
+ * CompaniesTable is the component holding both the Table and the Modal for the
+ * Companies Tab
+ *
+ * It starts by fetching companies from `/api/v1/companies` and culture types
+ * from /api/v1/culture_types
+ */
 export default function CompaniesTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tableLoading, setTableLoading] = useState(true);

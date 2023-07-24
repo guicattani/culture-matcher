@@ -11,6 +11,12 @@ if (process.env.NODE_ENV != "test") {
   Modal.setAppElement("#root");
 }
 
+/**
+ * CultureTypesTable is the component holding both the Table and the Modal for the
+ * Culture Type Tab
+ *
+ * It starts by fetching companies from `/api/v1/culture_types`
+ */
 export default function CultureTypesTable() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [tableLoading, setTableLoading] = useState(true);

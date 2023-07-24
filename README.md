@@ -56,6 +56,7 @@ It should be mostly self explanatory, but access the server with `localhost:3000
 - Dark Reader (Firefox) make the CSS look funny even when disabled
 - CSFR tokens are disabled
 - Add modals are pretty simple and repeat a lot, they need to be DRY-ed
+- FE components are pretty basic and need to be DRY-ed with Proptypes and better organization
 - HTML is very simple on purpose, everything is put under a header
 - `MaterialReactTable` has built-in filters but they are only front-end (we need all the data at runtime) so it would be better to offload some of that to the back-end as well
 - Performance in the `match` function `app/controllers/api/v1/matches_controller.rb` could be improved through batches, we don't need to do it all at once
@@ -86,7 +87,7 @@ It should be mostly self explanatory, but access the server with `localhost:3000
 - [x] API documentation: OpenAPI.
 - [x] Database: PostgreSQL.
 - [x] Tested
-- [ ] Documented
+- [x] Documented
 - [x] Linted
 
 ### Extra
@@ -100,7 +101,7 @@ It should be mostly self explanatory, but access the server with `localhost:3000
 - [x] JS or Typescript
 - [x] Jest
 - [x] Tested
-- [ ] Documented
+- [x] Documented
 - [x] Linted
 
 ---

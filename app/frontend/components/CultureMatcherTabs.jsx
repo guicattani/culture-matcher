@@ -6,6 +6,10 @@ import CompaniesTable from "./CompaniesTable";
 import CultureTypesTable from "./CultureTypesTable";
 import MatchesTable from "./MatchesTable";
 
+/**
+ * CultureMatcherTabs is the component that holds all the tables and organizes
+ * them in tabs
+ */
 export default function CultureMatcherTabs() {
   return (
     <div>
