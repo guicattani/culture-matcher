@@ -28,11 +28,11 @@ bundle exec rails s
 ## Run tests
 ### BE
 ```
-bundle rails db:prepare
+bundle rails db:prepare RAILS_ENV=test
 bundle exec rspec
 ```
 
-### FE 
+### FE
 ```
 npm run test
 ```
@@ -40,6 +40,17 @@ npm run test
 # How to use
 
 It should be mostly self explanatory, but access the server with `localhost:3000`. You should see the Culture Matcher hero and an empty table, that you can fill using the Modal that opens with clicking the `+` sign in the top left corner. Same goes for other Tabs (Company and Culture Type). The last tab is the Matches tab, where you can match the Company and the Applicants. At the moment there is no way of deleting Applicants, Companies, Culture Types and Matches in the UI. The tester is invited to remove it using `bundle exec rails c` and deleting directly in the model e.g.: `Applicant.last.destroy`
+
+### Troubleshooting
+
+- You may have errors with nokogiri which you can fix with `bundle update nokogiri`
+- If you don't have postgres installed remember to install `postgresql postgresql-contrib libpq-dev` before running `bundle install`. Create the password (default `root`) with:
+```
+sudo -u postgres psql
+
+\password postgres
+postgres
+```
 
 ---
 
